@@ -1,7 +1,7 @@
 # Getting Started with Kyle's Thesis Project
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-Contact author here [Kyle To](https://https://www.facebook.com/kyle.to.921/)
+Contact author here [Kyle To](https://www.facebook.com/kyle.to.921/)
 
 ## Available Scripts
 
