@@ -4,8 +4,11 @@ import { tokens } from "../../theme";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import OpacityIcon from '@mui/icons-material/Opacity';
+import WindPowerIcon from '@mui/icons-material/WindPower';
 import SetMealIcon from '@mui/icons-material/SetMeal';
 import ThermostatAutoIcon from '@mui/icons-material/ThermostatAuto';
+import HardwareIcon from '@mui/icons-material/Hardware';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
 // import GeographyChart from "../../components/GeographyChart";
@@ -17,6 +20,7 @@ import ProgressCircle from "../../components/ProgressCircle";
 import React, { useState, useEffect } from 'react';
 import txt from "./foo.txt";
 import Axios from "axios";
+
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -67,10 +71,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={tempData}
+            title={tempData} 
+            unit="°C"
             subtitle="Temperature"
-            progress="0.75"
-            increase="+2°C"
+            progress={tempData/32}
+            increase={tempData/32*100}
+            uniti="%"
             icon={
               <ThermostatIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -78,7 +84,7 @@ const Dashboard = () => {
             }
           />
         </Box>
-        {/* Temperature */}
+        {/* TDC */}
         <Box
           gridColumn="span 2"
           backgroundColor={colors.primary[400]}
@@ -88,17 +94,17 @@ const Dashboard = () => {
         >
           <StatBox
             title="29°C"
-            subtitle="Temperature"
+            subtitle="TDC"
             progress="0.75"
             increase="+2°C"
             icon={
-              <ThermostatIcon
+              <HardwareIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
           />
         </Box>
-        {/* Water level */}
+        {/* Ph */}
         <Box
           gridColumn="span 2"
           backgroundColor={colors.primary[400]}
@@ -107,17 +113,58 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="100%"
-            subtitle="Water Level"
-            progress="1"
-            increase="+0%"
+            title="7"
+            subtitle="pH"
+            progress="0.5"
+            increase="Normal"
             icon={
-              <OpacityIcon
+              <ThermostatAutoIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
           />
         </Box>
+        {/* Lighting */}
+        <Box
+          gridColumn="span 2"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title="ON"
+            subtitle="Lighting"
+            progress="1"
+            increase="+0%"
+            icon={
+              <LightModeIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+         {/* fan */} 
+        <Box
+          gridColumn="span 2"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title="ON"
+            subtitle="Fan"
+            progress="0.5"
+            increase="Normal"
+            icon={
+              <WindPowerIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+
         <Box
           gridColumn="span 2"
           backgroundColor={colors.primary[400]}
@@ -137,44 +184,8 @@ const Dashboard = () => {
             }
           />
         </Box>
-        <Box
-          gridColumn="span 2"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="7"
-            subtitle="pH"
-            progress="0.5"
-            increase="Normal"
-            icon={
-              <ThermostatAutoIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
-        <Box
-          gridColumn="span 2"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="7"
-            subtitle="pH"
-            progress="0.5"
-            increase="Normal"
-            icon={
-              <ThermostatAutoIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
+        
+        
 
         {/* ROW 2 */}
         <Box
