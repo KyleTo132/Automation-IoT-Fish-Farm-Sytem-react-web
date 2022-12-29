@@ -3,7 +3,7 @@ import { tokens } from "../../theme";
 // import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import ThermostatIcon from '@mui/icons-material/Thermostat';
-import OpacityIcon from '@mui/icons-material/Opacity';
+//import OpacityIcon from '@mui/icons-material/Opacity';
 import WindPowerIcon from '@mui/icons-material/WindPower';
 import SetMealIcon from '@mui/icons-material/SetMeal';
 import ThermostatAutoIcon from '@mui/icons-material/ThermostatAuto';
@@ -14,24 +14,43 @@ import LineChart from "../../components/LineChart";
 // import GeographyChart from "../../components/GeographyChart";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
+import StatBoxNoCircle from "../../components/StatBoxNoCircle";
+//import StatBoxToggle from "../../components/StatBoxToggle";
 import PieChart from "../../components/PieChart";
 import ProgressCircle from "../../components/ProgressCircle";
 //import * as fs from 'fs';
 import React, { useState, useEffect } from 'react';
-import txt from "./foo.txt";
+import txtTemp from "./temp.txt";
+import txtPh from "./ph.txt";
+import txtTdc from "./tdc.txt";
 import Axios from "axios";
+import Switch from "../../Switch";
+import Switch2 from "../../Switch2";
+
 
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [tempData, setTempData] = useState(0);
+  const [phData, setPhData] = useState(0);
+  const [tdcData, setTdcData] = useState(0);
+  const [value, setValue] = useState(false);
+  const [relay2, setRelay2] = useState(false);
 
  useEffect(()=>{
-   Axios(txt).then(res => setTempData(res.data)); // This will have your text inside data attribute
+   Axios(txtTemp).then(res => setTempData(res.data)); // This will have your text inside data attribute
    console.log(tempData);
 },[tempData])
-
+ useEffect(()=>{
+   Axios(txtPh).then(res => setPhData(res.data)); // This will have your text inside data attribute
+   console.log(phData);
+},[phData])
+ useEffect(()=>{
+   Axios(txtTdc).then(res => setTdcData(res.data)); // This will have your text inside data attribute
+   console.log(tdcData);
+},[tdcData])
+ 
   return (
     
     <Box m="20px">
@@ -93,10 +112,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="29°C"
+            title={tdcData} 
+            unit=" ppm"
             subtitle="TDC"
             progress="0.75"
             increase="+2°C"
+            uniti="%"
             icon={
               <HardwareIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -113,10 +134,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="7"
+            title={phData} 
+            unit=" unit"
             subtitle="pH"
-            progress="0.5"
-            increase="Normal"
+            progress="0.75"
+            increase="+2°C"
+            uniti="%"
             icon={
               <ThermostatAutoIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -132,11 +155,17 @@ const Dashboard = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <StatBox
+          <StatBoxNoCircle
             title="ON"
             subtitle="Lighting"
-            progress="1"
-            increase="+0%"
+            increase="Normal"
+            toggleButton={
+              <Switch
+                isOn={value}
+                onColor="#06D6A0"
+                handleToggle={() => setValue(!value)}
+              />
+            }
             icon={
               <LightModeIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -152,11 +181,16 @@ const Dashboard = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <StatBox
+          <StatBoxNoCircle
             title="ON"
             subtitle="Fan"
-            progress="0.5"
-            increase="Normal"
+            toggleButton={
+              <Switch2
+                is2On={relay2}
+                on2Color="#06D6A0"
+                handle2Toggle={() => setRelay2(!relay2)}
+              />
+            }
             icon={
               <WindPowerIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -327,5 +361,6 @@ const Dashboard = () => {
     </Box>
   );
 };
+
 
 export default Dashboard;
